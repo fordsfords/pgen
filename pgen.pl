@@ -1,5 +1,5 @@
 #!/usr/bin/env perl -w
-# pgen.pl - password generation tool
+# pgen.pl - XKCD-style password generation tool
 #
 # Copyright 2017 Steven Ford http://geeky-boy.com and licensed
 # "public domain" style under
@@ -18,10 +18,13 @@ use LWP::UserAgent;
 
 
 # globals
+
 my $tool = "pgen.pl";
 my $usage_str = "$tool [-h] [-q] [-r] [-s seed] [-l max_word_len] [-w num_words_in_pass] [-p num_passwords]";
 
+
 # process options.
+
 use vars qw($opt_h $opt_q $opt_r $opt_s $opt_l $opt_w $opt_p);
 getopts('hqrs:l:w:p:') || usage();
 
@@ -59,25 +62,31 @@ if (defined($opt_p)) {
 }
 
 
+# Get dictionary.
+
+my @dictionary;
 my $web_vocab = get("http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/");
 
-my @words;
+# parse out the html to find the words.
 foreach (split(/[\n\r]+/, $web_vocab)) {
   if (/^[\s]+(\w+)<br \/>/) {
     if (length($1) <= $max_word_len) {
-      push(@words, $1);
+      push(@dictionary, $1);
     }
   }
 }
 
-my $num_words = scalar(@words);
+my $num_words = scalar(@dictionary);
 print "num_words=$num_words\n";
 printf("%d words gives %d bits entropy\n",
        $num_words_in_pass, log($num_words**$num_words_in_pass)/log(2));
 
+
+# Get high-entropy random numbers (if "-r").
+
 my $num_randoms = $num_words_in_pass * $num_passwords;
 my @randoms;
-my $r = 0;
+my $r = 0;  # Used to step through @randoms for each random requested.
 
 if (defined($opt_r)) {
   if ($num_randoms >= 10000) { die "too many randoms for -r"; }
@@ -100,24 +109,29 @@ if (defined($opt_r)) {
   }
 }
 
+
+# Generate passwords.
+
 my $sum_password_lengths = 0;
 for (my $i = 0; $i < $num_passwords; $i++) {
   my $password = "";
   for (my $i = 0; $i < $num_words_in_pass; $i++) {
-    if (defined($opt_r)) {
-      $password .= ucfirst($words[int($randoms[$r++])]);
-    } else {
-      $password .= ucfirst($words[int(rand($num_words))]);
+    # Select a word at random from dictionary.
+    if (defined($opt_r)) {  # Use high-entropy randoms?
+      $password .= ucfirst($dictionary[int($randoms[$r++])]);
+    } else {  # Go ahead and use low-entropy randoms.
+      $password .= ucfirst($dictionary[int(rand($num_words))]);
     }
   }
 
-  $sum_password_lengths += length($password);
+  $sum_password_lengths += length($password);  # For average calc.
   if (! defined($opt_q)) {
     print "password: $password\n";
     print "length: " . length($password) . "\n";
   }
 }
 
+# Summarize.
 print "Average password length=" . $sum_password_lengths/$num_passwords . "\n";
 
 # All done.
