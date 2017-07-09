@@ -90,7 +90,7 @@ my @randoms;
 my $r = 0;  # Used to step through @randoms for each random requested.
 
 if (defined($opt_r)) {
-  if ($num_randoms >= 10000) { die "too many randoms for -r"; }
+  if ($num_randoms >= 100) { die "FATAL: too many randoms for '-r'"; }
 
   my $ua = LWP::UserAgent->new;
   my $req = HTTP::Request->new(GET =>
