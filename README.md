@@ -29,7 +29,7 @@ Here are the interesting features of the program:
 
 * It starts with a set of 3000 words published by [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) and filters it by word length.
 
-* It can either use Perl's internal pseudo-random number generator, or it can get random numbers from https://random.org which should make the resulting password more secure.  See http://blog.geeky-boy.com/2017/07/pseudo-random-passwords-limit-entropy.html
+* It can either use Perl's internal pseudo-random number generator (useful for experimentation and statistics gathering), or it can get random numbers from https://random.org which makes the resulting password properly secure.
 
 You can get help by entering:
 
