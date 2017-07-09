@@ -35,6 +35,8 @@ You can get help by entering:
 
         ./pgen -h
 
+Important: if you plan to actually use the passwords you generate, use "-r"!  [Here's why](http://blog.geeky-boy.com/2017/07/pseudo-random-passwords-limit-entropy.html).
+
 ## 2000.sh and 3000.sh
 
 Also included are two shell scripts that fetch lists of common words off the Internet.  2000.sh goes to [Wiktionary.org](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) to get 2000 words, and 3000.sh goes to [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) to get 3000 words.
