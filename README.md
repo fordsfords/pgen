@@ -39,6 +39,6 @@ Important: if you plan to actually use the passwords you generate, use "-r"!  [H
 
 ## 2000.sh and 3000.sh
 
-Also included are two shell scripts that fetch lists of common words off the Internet.  2000.sh goes to [Wiktionary.org](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) to get 2000 words, and 3000.sh goes to [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) to get 3000 words.
+Also included are two shell scripts that fetch lists of common words off the Internet.  2000.sh goes to [Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) to get 2000 words, and 3000.sh goes to [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) to get 3000 words.
 
-These shell scripts are not needed since I included code in the Perl program to fetch the Education First list.
+These shell scripts are not needed since I included code in the Perl program to fetch the Education First list.  (The reason I do this is that the material on Education First's site is copyrighted, so I can't just snag a copy of their word list without permission.)
