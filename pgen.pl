@@ -38,6 +38,7 @@ if (defined($opt_s)) {
   $seed = $opt_s;
 }
 if (! defined($opt_r)) {
+  print "WARNING: '-r' not supplied, using INSECURE random number generator.\n";
   if (! defined($seed)) {
     $seed = int(rand(2**31));
     print "seed=$seed\n";
