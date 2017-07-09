@@ -1,10 +1,15 @@
 #!/usr/bin/env perl -w
 # pgen.pl - password generation tool
-# Copyright 2017 Steve Ford (sford@geeky-boy.com) and made available under the
-#   Steve Ford's "standard disclaimer, policy, and copyright" notice.  See
-#   http://www.geeky-boy.com/steve/standard.html for details.  It means you
-#   can do pretty much anything you want with it, including making your own
-#   money, but you can't blame me for anything bad that happens.
+#
+# Copyright 2017 Steven Ford http://geeky-boy.com and licensed
+# "public domain" style under
+# [CC0](http://creativecommons.org/publicdomain/zero/1.0/): 
+# 
+# To the extent possible under law, the contributors to this project have
+# waived all copyright and related or neighboring rights to this work.
+# In other words, you can use this code for any purpose without any
+# restrictions.  This work is published from: United States.  The project home
+# is https://github.com/fordsfords/pgen
 
 use strict;
 use Getopt::Std;
