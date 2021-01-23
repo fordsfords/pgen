@@ -1,9 +1,9 @@
 #!/usr/bin/env perl -w
 # pgen.pl - XKCD-style password generation tool
 #
-# Copyright 2017 Steven Ford http://geeky-boy.com and licensed
+# Copyright 2017-2020 Steven Ford https://geeky-boy.com and licensed
 # "public domain" style under
-# [CC0](http://creativecommons.org/publicdomain/zero/1.0/): 
+# [CC0](https://creativecommons.org/publicdomain/zero/1.0/): 
 # 
 # To the extent possible under law, the contributors to this project have
 # waived all copyright and related or neighboring rights to this work.
@@ -14,7 +14,8 @@
 use strict;
 use Getopt::Std;
 use LWP::Simple;
-use LWP::UserAgent;
+use LWP::UserAgent ();
+use Carp;
 
 
 # globals
@@ -34,7 +35,7 @@ if (defined($opt_h)) {
 
 my $seed;
 if (defined($opt_s)) {
-  if (defined($opt_r)) { die("-r is incompatible with -s"); }
+  if (defined($opt_r)) { croak("-r is incompatible with -s"); }
   $seed = $opt_s;
 }
 if (! defined($opt_r)) {
@@ -64,21 +65,20 @@ if (defined($opt_p)) {
 
 
 # Get dictionary.
-
 my @dictionary;
-my $web_vocab = get("http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/");
-
-# parse out the html to find the words.
-foreach (split(/[\n\r]+/, $web_vocab)) {
-  if (/^[\s]+(\w+)<br \/>/) {
-    if (length($1) <= $max_word_len) {
-      push(@dictionary, $1);
+my $max_length = 0;
+while (<>) {
+  chomp;
+  if (length($_) <= $max_word_len) {
+    if (length($_) > $max_length) {
+      $max_length = length($_);
     }
+    push(@dictionary, $_);
   }
 }
 
 my $num_words = scalar(@dictionary);
-print "num_words=$num_words\n";
+print "num_words=$num_words, max_length=$max_length\n";
 printf("%d words gives %d bits entropy\n",
        $num_words_in_pass, log($num_words**$num_words_in_pass)/log(2));
 
@@ -90,7 +90,7 @@ my @randoms;
 my $r = 0;  # Used to step through @randoms for each random requested.
 
 if (defined($opt_r)) {
-  if ($num_randoms >= 100) { die "FATAL: too many randoms for '-r'"; }
+  if ($num_randoms >= 100) { croak("FATAL: too many randoms for '-r'"); }
 
   my $ua = LWP::UserAgent->new;
   my $req = HTTP::Request->new(GET =>
@@ -99,7 +99,7 @@ if (defined($opt_r)) {
       "\&col=1\&base=10\&format=html\&rnd=new");
   my $res = $ua->request($req);
   if (! $res->is_success) {
-    die("UserAgent failed: ", $res->status_line, "\n");
+    croak("UserAgent failed: ", $res->status_line, "\n");
   }
   my $web_rand = $res->as_string;
 

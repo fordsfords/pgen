@@ -27,7 +27,14 @@ The pgen program downloads a list of common english words and randomly selects s
 
 Here are the interesting features of the program:
 
-* It starts with a set of 3000 words published by [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) and filters it by word length.
+* It starts with a set of 3000 words that I put together.
+I make use of several "lists of common words" for suggestions, including
+[Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/)
+and [Wikipedia](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction).
+But this is not a simple copy of any of the lists, and I consider it
+my own.
+I wanted them to be words that most people would understand and know how to
+spell.
 
 * It can either use Perl's internal pseudo-random number generator (useful for experimentation and statistics gathering), or it can get random numbers from https://random.org which makes the resulting password properly secure.
 
@@ -36,9 +43,3 @@ You can get help by entering:
         ./pgen -h
 
 Important: if you plan to actually use the passwords you generate, use "-r"!  [Here's why](http://blog.geeky-boy.com/2017/07/pseudo-random-passwords-limit-entropy.html).
-
-## 2000.sh and 3000.sh
-
-Also included are two shell scripts that fetch lists of common words off the Internet.  2000.sh goes to [Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) to get 2000 words, and 3000.sh goes to [Education First](http://www.ef.edu/english-resources/english-vocabulary/top-3000-words/) to get 3000 words.
-
-These shell scripts are not needed since I included code in the Perl program to fetch the Education First list.  (The reason I do this is that the material on Education First's site is copyrighted, so I can't just snag a copy of their word list without permission.)
