@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -w
+#!/usr/bin/env perl
 # pgen.pl - XKCD-style password generation tool
 #
 # Copyright 2017-2020 Steven Ford https://geeky-boy.com and licensed
@@ -12,6 +12,7 @@
 # is https://github.com/fordsfords/pgen
 
 use strict;
+use warnings;
 use Getopt::Std;
 use LWP::Simple;
 use LWP::UserAgent ();
@@ -21,13 +22,13 @@ use Carp;
 # globals
 
 my $tool = "pgen.pl";
-my $usage_str = "$tool [-h] [-q] [-r] [-s seed] [-l max_word_len] [-w num_words_in_pass] [-p num_passwords]";
+my $usage_str = "$tool [-h] [-q] [-r] [-f file] [-s seed] [-l max_word_len] [-w num_words_in_pass] [-p num_passwords]";
 
 
 # process options.
 
-use vars qw($opt_h $opt_q $opt_r $opt_s $opt_l $opt_w $opt_p);
-getopts('hqrs:l:w:p:') || usage();
+use vars qw($opt_h $opt_q $opt_r $opt_f $opt_s $opt_l $opt_w $opt_p);
+getopts('hqrf:s:l:w:p:') || usage();
 
 if (defined($opt_h)) {
   help();  # if -h had a value, it would be in $opt_h
@@ -63,11 +64,18 @@ if (defined($opt_p)) {
   $num_passwords = $opt_p;
 }
 
+my $file = "words.3000";
+if (defined($opt_f)) {
+  $file = $opt_f;
+}
+
 
 # Get dictionary.
 my @dictionary;
 my $max_length = 0;
-while (<>) {
+
+open(my $fh, "<", $file) || croak("open $file: $!");
+while (<$fh>) {
   chomp;
   if (length($_) <= $max_word_len) {
     if (length($_) > $max_length) {
@@ -76,6 +84,7 @@ while (<>) {
     push(@dictionary, $_);
   }
 }
+close($fh);
 
 my $num_words = scalar(@dictionary);
 print "num_words=$num_words, max_length=$max_length\n";

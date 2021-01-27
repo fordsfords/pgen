@@ -40,6 +40,13 @@ spell.
 
 You can get help by entering:
 
-        ./pgen -h
+        ./pgen.pl -h
 
 Important: if you plan to actually use the passwords you generate, use "-r"!  [Here's why](http://blog.geeky-boy.com/2017/07/pseudo-random-passwords-limit-entropy.html).
+
+To try it out without downloading it, go here:
+https://repl.it/@fordsfords/pgen#README.md
+
+Click on the right-hand panel and enter:
+
+        ./pgen.pl -r
