@@ -23,7 +23,7 @@ at http://geeky-boy.com.  Can't see it?  Keep looking.
 
 XKCD had an excellent comic -- https://xkcd.com/936/ -- which proposed a style of password generation consisting of randomly selecting 4 words from a list of ~2000 common words.  The result is a password which is more secure and easier to remember than most common methods of password creation.
 
-The pgen program downloads a list of common english words and randomly selects some for a password.  I used the program to produce some mildly-interesting results in [my blog](http://blog.geeky-boy.com/2017/07/i-got-to-thinking-about-passwords-again.html).
+The pgen program uses a list of 3000 common english words and randomly selects some for a password.  I used the program to produce some mildly-interesting results in [my blog](http://blog.geeky-boy.com/2017/07/i-got-to-thinking-about-passwords-again.html).
 
 Here are the interesting features of the program:
 
